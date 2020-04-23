@@ -80,8 +80,7 @@ button {
 .card {
   max-width: calc(100% - 10px);
 }
-.mdi-store::before {
+.v-alert__icon.v-icon {
   font-size: 2rem;
-  margin-top: 6px;
 }
 </style>

@@ -28,9 +28,9 @@
               content.name
             }}</v-list-item-title>
             <v-list-item-subtitle class="price"
-              >Rp.{{ content.price }}</v-list-item-subtitle
+              >Rp.{{ content.price }} / {{ content.unit }}</v-list-item-subtitle
             >
-            <div class="overline mt-1">OVERLINE</div>
+            <div class="overline mt-1">{{ content.note }}</div>
           </v-list-item-content>
         </v-list-item>
 
@@ -52,20 +52,9 @@ export default {
       list: [
         {
           name: "Micin",
-          desc: "beli 3 dapet q",
+          note: "beli 3 dapet 1",
           price: 5000,
-          imageUrl: "https://cdn.vuetifyjs.com/images/cards/store.jpg",
-        },
-        {
-          name: "Micin",
-          desc: "beli 3 dapet q",
-          price: 5000,
-          imageUrl: "https://cdn.vuetifyjs.com/images/cards/store.jpg",
-        },
-        {
-          name: "Micin",
-          desc: "beli 3 dapet q",
-          price: 5000,
+          unit: "buah",
           imageUrl: "https://cdn.vuetifyjs.com/images/cards/store.jpg",
         },
       ],
@@ -91,5 +80,8 @@ export default {
 .price {
   color: #3bbcd4 !important;
   font-weight: bold;
+}
+.v-application .overline {
+  text-transform: unset;
 }
 </style>

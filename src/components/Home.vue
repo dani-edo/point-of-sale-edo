@@ -13,8 +13,8 @@
       </v-card>
 
       <v-card
-        v-for="(content, index) in list"
-        :key="index"
+        v-for="content in list"
+        :key="content.key"
         class="mx-auto"
         max-width="100%"
         outlined
@@ -33,11 +33,6 @@
             <div class="overline mt-1">{{ content.note }}</div>
           </v-list-item-content>
         </v-list-item>
-
-        <!-- <v-card-actions>
-          <v-btn text>Button</v-btn>
-          <v-btn text>Button</v-btn>
-        </v-card-actions> -->
       </v-card>
     </v-col>
   </v-row>
@@ -56,6 +51,7 @@ export default {
           price: 5000,
           unit: "buah",
           imageUrl: "https://cdn.vuetifyjs.com/images/cards/store.jpg",
+          key: "jahsgdjha",
         },
       ],
     };

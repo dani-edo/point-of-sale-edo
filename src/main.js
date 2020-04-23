@@ -1,14 +1,16 @@
 import Vue from "vue";
 import App from "./App.vue";
 import firebase from "./plugins/firebase";
-import VueFirebase from "vue-firebase";
-import vuetify from './plugins/vuetify';
+import vuetify from "./plugins/vuetify";
+import VueRouter from "vue-router";
+import router from "./plugins/router";
 
+Vue.use(VueRouter);
 Vue.config.productionTip = false;
 
 new Vue({
-  VueFirebase,
   firebase,
   vuetify,
-  render: (h) => h(App)
+  router,
+  render: (h) => h(App),
 }).$mount("#app");

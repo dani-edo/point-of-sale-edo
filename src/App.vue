@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <!-- disable dekstop version -->
     <div class="blank" v-if="dekstop">
       <v-alert
         border="left"
@@ -27,7 +28,13 @@
         <v-divider></v-divider>
 
         <v-list dense>
-          <v-list-item v-for="item in items" :key="item.title" link>
+          <v-list-item
+            v-for="item in items"
+            :key="item.title"
+            link
+            :to="item.link"
+          >
+            <!-- <router-link :to="item.link"> -->
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-icon>
@@ -35,6 +42,7 @@
             <v-list-item-content>
               <v-list-item-title>{{ item.title }}</v-list-item-title>
             </v-list-item-content>
+            <!-- </router-link> -->
           </v-list-item>
         </v-list>
       </v-navigation-drawer>
@@ -53,7 +61,7 @@
           <v-btn color="primary" dark @click.stop="drawer = !drawer">
             Menu
           </v-btn>
-          <Home />
+          <router-view></router-view>
         </v-container>
       </v-content>
     </v-sheet>
@@ -61,21 +69,14 @@
 </template>
 
 <script>
-import Home from "./components/Home";
-
 export default {
-  name: "App",
-
-  components: {
-    Home,
-  },
-
+  name: "Home",
   data() {
     return {
       drawer: null,
       items: [
-        { title: "Cari", icon: "search" },
-        { title: "Daftar Produk", icon: "list" },
+        { title: "Cari", icon: "search", link: "/" },
+        { title: "Daftar Produk", icon: "list", link: "/list" },
       ],
       title: "Warung si mbok",
       dekstop: true,
@@ -105,7 +106,7 @@ button.primary {
   position: fixed;
   right: 10px;
   bottom: 10px;
-  background-color: #3bbcd4!important;
+  background-color: #3bbcd4 !important;
 }
 .card {
   max-width: calc(100% - 10px);

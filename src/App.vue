@@ -1,60 +1,87 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+    <v-sheet height="100vh" class="overflow-hidden" style="position: relative;">
+      <v-navigation-drawer v-model="drawer" absolute temporary>
+        <v-list-item>
+          <!-- <v-list-item-avatar>
+            <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
+          </v-list-item-avatar> -->
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
+          <v-list-item-content>
+            <v-list-item-title>Warung si Mbok</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
 
-      <v-spacer></v-spacer>
+        <v-divider></v-divider>
 
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
+        <v-list dense>
+          <v-list-item v-for="item in items" :key="item.title" link>
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
 
-    <v-content>
-      <HelloWorld/>
-    </v-content>
+            <v-list-item-content>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+
+      <v-content>
+        <v-container>
+          <v-alert
+            color="cyan"
+            border="left"
+            elevation="2"
+            colored-border
+            icon="mdi-store"
+          >
+            <h1 class="title">Warung si Mbok</h1>
+          </v-alert>
+          <v-btn color="primary" dark @click.stop="drawer = !drawer">
+            Menu
+          </v-btn>
+          <Home />
+        </v-container>
+      </v-content>
+    </v-sheet>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import Home from "./components/Home";
 
 export default {
-  name: 'App',
+  name: "App",
 
   components: {
-    HelloWorld,
+    Home,
   },
 
-  data: () => ({
-    //
-  }),
+  data() {
+    return {
+      drawer: null,
+      items: [
+        { title: "Cari", icon: "search" },
+        { title: "Daftar Produk", icon: "list" },
+      ],
+      title: "Warung si mbok",
+    };
+  },
 };
 </script>
+
+<style scoped>
+button {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+}
+.card {
+  max-width: calc(100% - 10px);
+}
+.mdi-store::before {
+  font-size: 2rem;
+  margin-top: 6px;
+}
+</style>

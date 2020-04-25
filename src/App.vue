@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <!-- disable dekstop version -->
+    <!-- disable dekstop version :start -->
     <div class="blank" v-if="dekstop">
       <v-alert
         border="left"
@@ -12,58 +12,71 @@
         Please open in mobile version or responsive mode!
       </v-alert>
     </div>
+    <!-- disable dekstop version :end -->
 
-    <v-sheet height="100vh" class="overflow-scroll" style="position: relative;">
-      <v-navigation-drawer v-model="drawer" absolute temporary>
-        <v-list-item>
-          <!-- <v-list-item-avatar>
+    <!-- navbar :start -->
+    <v-navigation-drawer v-model="drawer" absolute temporary>
+      <v-list-item>
+        <!-- <v-list-item-avatar>
             <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
           </v-list-item-avatar> -->
 
+        <v-list-item-content>
+          <v-list-item-title>Warung si Mbok</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-divider></v-divider>
+
+      <v-list dense>
+        <v-list-item
+          v-for="item in items"
+          :key="item.title"
+          link
+          :to="item.link"
+        >
+          <!-- <router-link :to="item.link"> -->
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+
           <v-list-item-content>
-            <v-list-item-title>Warung si Mbok</v-list-item-title>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
+          <!-- </router-link> -->
         </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+    <!-- navbar :end -->
 
-        <v-divider></v-divider>
+    <v-sheet
+      height="100vh"
+      class="overflow-scroll v-sheet-background"
+      style="position: relative;"
+    >
+      <!-- title :start -->
+      <v-alert
+        color="cyan"
+        border="left"
+        elevation="2"
+        colored-border
+        icon="mdi-store"
+        class="caption"
+      >
+        <h1 class="title">Warung si Mbok</h1>
+      </v-alert>
+      <!-- title :end -->
 
-        <v-list dense>
-          <v-list-item
-            v-for="item in items"
-            :key="item.title"
-            link
-            :to="item.link"
-          >
-            <!-- <router-link :to="item.link"> -->
-            <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-icon>
-
-            <v-list-item-content>
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item-content>
-            <!-- </router-link> -->
-          </v-list-item>
-        </v-list>
-      </v-navigation-drawer>
-
+      <!-- content :start -->
       <v-content>
         <v-container>
-          <v-alert
-            color="cyan"
-            border="left"
-            elevation="2"
-            colored-border
-            icon="mdi-store"
-          >
-            <h1 class="title">Warung si Mbok</h1>
-          </v-alert>
           <v-btn color="primary" dark @click.stop="drawer = !drawer">
             Menu
           </v-btn>
           <router-view></router-view>
         </v-container>
       </v-content>
+      <!-- content :end -->
     </v-sheet>
   </v-app>
 </template>
@@ -107,7 +120,7 @@ button.v-btn {
   right: 10px;
   bottom: 10px;
   background-color: #3bbcd4 !important;
-  z-index: 99;
+  z-index: 1;
 }
 .card {
   max-width: calc(100% - 10px);
@@ -127,7 +140,26 @@ button.v-btn {
   align-items: center;
   justify-content: center;
 }
-.v-sheet {
+.v-sheet-background.v-sheet {
   background: #f0f0f0;
+}
+.overflow-scroll {
+  overflow: scroll;
+}
+.caption {
+  position: fixed;
+  z-index: 1;
+  margin: 12px;
+  width: calc(100% - 24px);
+  left: 0;
+}
+.v-content {
+  margin-top: 70px;
+}
+</style>
+
+<style>
+html {
+  scroll-behavior: smooth;
 }
 </style>

@@ -23,13 +23,14 @@
           </v-list-item-content>
           <v-card-actions class="flex-column actions">
             <v-btn variant="primary" class="primary">Edit</v-btn>
-            <v-btn variant="danger" class="error">Del</v-btn>
+            <v-btn variant="danger" class="error" @click="deleteProduct(content.key)">Del</v-btn>
           </v-card-actions>
         </v-list-item>
       </v-card>
     </v-col>
 
-    <v-dialog v-model="dialog" persistent max-width="600px">
+    <!-- Modal create :start -->
+    <v-dialog v-model="modal_create" persistent max-width="600px">
       <template v-slot:activator="{ on }">
         <!-- <v-btn color="primary" dark v-on="on">Open Dialog</v-btn> -->
         <v-btn class="floating-button" fab small dark color="primary" v-on="on">
@@ -40,7 +41,7 @@
       <v-card>
         <v-form @submit.prevent="createFirebaseData">
           <v-card-title>
-            <span class="headline">Buat Baru</span>
+            <span class="headline">Buat Produk</span>
           </v-card-title>
           <v-card-text>
             <v-container>
@@ -83,14 +84,50 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click="dialog = false"
-              >Close</v-btn
+            <v-btn color="blue darken-1" text @click="modal_create = false"
+              >Batal</v-btn
             >
-            <v-btn color="blue darken-1" text type="submit">Save</v-btn>
+            <v-btn color="blue darken-1" text type="submit">Simpan</v-btn>
           </v-card-actions>
         </v-form>
       </v-card>
     </v-dialog>
+    <!-- Modal create :end -->
+
+    <!-- modal delete confirmation :start -->
+    <v-dialog
+      v-model="modal_delete"
+      max-width="290"
+    >
+      <v-card>
+        <v-card-title class="headline">?</v-card-title>
+
+        <v-card-text>
+          Apakah anda yakin ingin menghapus produk ini?
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn
+            color="green darken-1"
+            text
+            @click="modal_delete = false"
+          >
+            Batal
+          </v-btn>
+
+          <v-btn
+            color="green darken-1"
+            text
+            @click="deleteConfirmed()"
+          >
+            Hapus
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <!-- modal delete confirmation :end -->
   </v-row>
 </template>
 
@@ -104,7 +141,9 @@ export default {
     return {
       input: "",
       list: [],
-      dialog: false,
+      modal_create: false,
+      modal_delete: false,
+      delete_confirmation_key: '',
       data: {
         name: "",
         price: null,
@@ -129,6 +168,7 @@ export default {
         if (snap_val !== null) {
           Object.entries(snap_val).map((e) => {
             e[1].key = e[0];
+            e[1].price = e[1].price.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
             this.list.push(e[1]);
           });
         }
@@ -141,10 +181,19 @@ export default {
       updates["/" + firebaseKey] = this.data;
       firebaseRef.update(updates);
 
-      this.dialog = false;
+      this.modal_create = false;
       this.data.name = this.data.unit = this.data.note = "";
       this.data.price = null;
     },
+    deleteProduct(key) {
+      this.modal_delete = true
+      this.delete_confirmation_key = key
+    },
+    deleteConfirmed() {
+      firebase.database().ref("/" + this.delete_confirmation_key).remove()
+      this.delete_confirmation_key = ''
+      this.modal_delete = false
+    }
   },
 };
 </script>
@@ -176,12 +225,12 @@ button.v-btn.floating-button {
   bottom: 10px;
   left: 10px;
   background-color: #3bbcd4 !important;
-  z-index: 99;
+  z-index: 1;
 }
 .actions {
   margin-right: -16px;
 }
-.v-card {
+.product-list {
   margin-bottom: 1rem;
 }
 </style>

@@ -25,6 +25,7 @@
             <v-btn
               variant="primary"
               class="primary"
+              disabled
               @click="editProduct(content.key)"
               >Edit</v-btn
             >
@@ -102,6 +103,7 @@
                     placeholder="Pick an avatar"
                     prepend-icon="mdi-camera"
                     label="Foto Produk"
+                    required
                     @change="handleImage"
                   ></v-file-input>
                 </v-col>
@@ -184,6 +186,7 @@ export default {
       rules: {
         form_rules: [(value) => !!value || "Required."],
         image_rules: [
+          (value) => !!value || "Required.",
           (value) =>
             !value ||
             value.size < 2000000 ||
@@ -237,15 +240,15 @@ export default {
 
       if (!hasError) {
         if (!this.condition.edit_product) {
-          // <- Edit Product
+          // Edit Product
           var databaseRef = firebase.database().ref("/"),
             firebaseKey = databaseRef.push().key,
             updates = {};
         } else {
-          // <- Create Product
-          (databaseRef = firebase.database().ref("/")),
-            (firebaseKey = this.key.edit_key),
-            (updates = {});
+          // Create Product
+          databaseRef = firebase.database().ref("/");
+          firebaseKey = this.key.edit_key;
+          updates = {};
         }
         const image_name = firebaseKey + this.imageInput.name;
         this.data_create.image_name = image_name;

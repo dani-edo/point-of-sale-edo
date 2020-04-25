@@ -13,7 +13,7 @@
       </v-alert>
     </div>
 
-    <v-sheet height="100vh" class="overflow-hidden" style="position: relative;">
+    <v-sheet height="100vh" class="overflow-scroll" style="position: relative;">
       <v-navigation-drawer v-model="drawer" absolute temporary>
         <v-list-item>
           <!-- <v-list-item-avatar>
@@ -102,11 +102,12 @@ export default {
 </script>
 
 <style scoped>
-button.primary {
+button.v-btn {
   position: fixed;
   right: 10px;
   bottom: 10px;
   background-color: #3bbcd4 !important;
+  z-index: 99;
 }
 .card {
   max-width: calc(100% - 10px);
@@ -125,5 +126,8 @@ button.primary {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.v-sheet {
+  background: #f0f0f0;
 }
 </style>

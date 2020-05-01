@@ -159,6 +159,7 @@
 import * as firebase from "firebase/app";
 import "firebase/database";
 import "firebase/storage";
+import { mapActions } from "vuex";
 
 export default {
   name: "List",
@@ -217,11 +218,14 @@ export default {
               .then((data) => {
                 e[1].imageUrl = data;
                 this.list.push(e[1]);
+                this.loading(false);
               })
               .catch((error) => {
                 console.log("error", error);
               });
           });
+        } else {
+          this.loading(false);
         }
       });
     },
@@ -239,6 +243,7 @@ export default {
       });
 
       if (!hasError) {
+        this.loading(true);
         if (!this.condition.edit_product) {
           // Edit Product
           var databaseRef = firebase.database().ref("/"),
@@ -281,6 +286,7 @@ export default {
         this.condition.modal_create = false;
         this.condition.edit_product = false;
         this.emptyData();
+        this.loading(false);
       } else {
         Object.entries(this.$refs).forEach((e) => {
           this.$refs[e[0]].validate(true);
@@ -303,6 +309,7 @@ export default {
       this.key.delete_image_name = image;
     },
     deleteConfirmed() {
+      this.loading(true);
       firebase
         .database()
         .ref("/" + this.key.delete_confirmation_key)
@@ -314,9 +321,11 @@ export default {
         .then(() => {
           console.log("deleted succesfully");
           this.getFirebaseData();
+          this.loading(false);
         })
         .catch((error) => {
           console.log(error);
+          this.loading(false);
         });
       this.key.delete_confirmation_key = this.key.delete_image_name = "";
       this.condition.modal_delete = false;
@@ -326,6 +335,7 @@ export default {
         "";
       this.data_create.price = null;
     },
+    ...mapActions(["loading"]),
   },
 };
 </script>

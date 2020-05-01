@@ -14,6 +14,14 @@
     </div>
     <!-- disable dekstop version :end -->
 
+    <!-- loader overlay :start -->
+    <div class="text-center">
+      <v-overlay :value="loader">
+        <v-progress-circular indeterminate size="64"></v-progress-circular>
+      </v-overlay>
+    </div>
+    <!-- loader overlay :end -->
+
     <!-- navbar :start -->
     <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list-item>
@@ -82,9 +90,11 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
+
 export default {
   name: "Home",
-  data() {
+  data: () => {
     return {
       drawer: null,
       items: [
@@ -94,6 +104,9 @@ export default {
       title: "Warung si mbok",
       dekstop: true,
     };
+  },
+  computed: {
+    ...mapState(["loader"])
   },
   created() {
     window.addEventListener("resize", this.onResize);
@@ -132,7 +145,7 @@ button.v-btn {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 2;
   background: #e0e0e0;
   width: 100vw;
   height: 100vh;
@@ -161,5 +174,8 @@ button.v-btn {
 <style>
 html {
   scroll-behavior: smooth;
+}
+.v-overlay {
+  z-index: 99!important;
 }
 </style>

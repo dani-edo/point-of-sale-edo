@@ -104,6 +104,7 @@ export default {
   left: 10px;
   bottom: 10px;
   z-index: 1;
+  max-width: 100%;
 }
 .price {
   color: #3bbcd4 !important;

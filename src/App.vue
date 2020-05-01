@@ -71,15 +71,15 @@
         icon="mdi-store"
         class="caption"
       >
-        <h1 class="title">Warung si Mbok</h1>
+        <h1 class="title">Warung Mbok Soinem</h1>
       </v-alert>
       <!-- title :end -->
 
       <!-- content :start -->
       <v-content>
         <v-container>
-          <v-btn color="primary" dark @click.stop="drawer = !drawer">
-            Menu
+          <v-btn color="primary" class="menu-button" dark @click.stop="drawer = !drawer">
+            <v-icon>menu</v-icon>
           </v-btn>
           <router-view></router-view>
         </v-container>
@@ -132,10 +132,12 @@ export default {
 </script>
 
 <style scoped>
-button.v-btn {
+button.v-btn.menu-button {
+  min-width: 45px;
+  padding: 0 10px;
   position: fixed;
-  right: 10px;
-  bottom: 10px;
+  right: 25px;
+  top: 25px;
   background-color: #3bbcd4 !important;
   z-index: 1;
 }

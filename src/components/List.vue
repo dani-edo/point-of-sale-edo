@@ -82,7 +82,7 @@
                 <v-col class="px-0 py-0" cols="6">
                   <v-select
                     ref="unit"
-                    :items="['Buah', 'Kotak', 'Kilo', 'Ons']"
+                    :items="['Buah', 'Kotak', 'Kg', 'Ons', 'Bungkus']"
                     label="Satuan"
                     v-model="data_create.unit"
                     class="ml-1"

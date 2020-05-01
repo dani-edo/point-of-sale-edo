@@ -2,13 +2,18 @@
   <v-row>
     <v-col>
       <v-card class="search-container">
-        <v-form ref="form" @submit.prevent="onSubmit">
+        <v-form ref="form" class="form-search" @submit.prevent="onSubmit">
           <v-text-field
             class="text-input"
             v-model="input"
             label="Cari..."
-            @keyup="onKeyup"
+            clearable
+            @click:clear="onClear"
+            color="#3bbcd4"
           ></v-text-field>
+          <v-btn class="submit-search" type="submit">
+            <v-icon>search</v-icon>
+          </v-btn>
         </v-form>
       </v-card>
 
@@ -55,7 +60,7 @@ export default {
     ...mapState(["list"]),
   },
   methods: {
-    onKeyup() {
+    onSubmit() {
       // show/hide element by search :start
       if (this.input !== "") {
         this.list.map((e) => {
@@ -69,17 +74,28 @@ export default {
           }
         });
       } else {
-        this.list.map((e) => {
-          this.$refs[e.key][0].$el.classList.remove("hide");
-        });
+        this.onClear();
       }
       // show/hide element by search :end
+    },
+    onClear() {
+      this.list.map((e) => {
+        this.$refs[e.key][0].$el.classList.remove("hide");
+      });
     },
   },
 };
 </script>
 
 <style scoped>
+.form-search {
+  display: flex;
+}
+.submit-search {
+  background-color: #3bbcd4 !important;
+  color: white;
+  margin: auto 15px;
+}
 .text-input {
   padding: 1rem 1rem 0;
 }

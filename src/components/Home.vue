@@ -69,7 +69,7 @@ export default {
     onInput(e) {
       this.input = e;
       // show/hide element by search :start
-      if (this.input !== "") {
+      if (this.input !== null) {
         this.list.map((e) => {
           if (
             e.name.toLowerCase().includes(this.input) ||
@@ -107,7 +107,7 @@ export default {
   left: 10px;
   bottom: 10px;
   z-index: 1;
-  max-width: 100%;
+  max-width: calc(100% - 20px);
 }
 .price {
   color: #3bbcd4 !important;

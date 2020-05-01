@@ -15,7 +15,7 @@
       <v-card
         v-for="content in list"
         :key="content.key"
-        class="mx-auto"
+        class="mx-auto product-list"
         max-width="100%"
         outlined
       >
@@ -39,22 +39,17 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "Home",
   data() {
     return {
       input: "",
-      list: [
-        {
-          name: "Micin",
-          note: "beli 3 dapet 1",
-          price: 5000,
-          unit: "buah",
-          imageUrl: "https://cdn.vuetifyjs.com/images/cards/store.jpg",
-          key: "jahsgdjha",
-        },
-      ],
     };
+  },
+  computed: {
+    ...mapState(["list"]),
   },
   methods: {
     onKeyup() {

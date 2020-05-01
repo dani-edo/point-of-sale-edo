@@ -159,14 +159,13 @@
 import * as firebase from "firebase/app";
 import "firebase/database";
 import "firebase/storage";
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "List",
   data() {
     return {
       imageInput: [],
-      list: [],
       condition: {
         modal_create: false,
         modal_delete: false,
@@ -196,39 +195,10 @@ export default {
       },
     };
   },
-  mounted() {
-    this.getFirebaseData();
+  computed: {
+    ...mapState(["list"]),
   },
   methods: {
-    getFirebaseData() {
-      const databaseRef = firebase.database().ref("/");
-      databaseRef.once("value", (snapshot) => {
-        const snap_val = snapshot.val();
-        this.list = [];
-
-        if (snap_val !== null) {
-          Object.entries(snap_val).map((e) => {
-            e[1].key = e[0];
-            e[1].price = e[1].price.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
-
-            firebase
-              .storage()
-              .ref("product_picture/" + e[1].image_name)
-              .getDownloadURL()
-              .then((data) => {
-                e[1].imageUrl = data;
-                this.list.push(e[1]);
-                this.loading(false);
-              })
-              .catch((error) => {
-                console.log("error", error);
-              });
-          });
-        } else {
-          this.loading(false);
-        }
-      });
-    },
     handleImage(e) {
       this.imageInput = e;
     },
@@ -371,8 +341,5 @@ button.v-btn.floating-button {
 }
 .actions {
   margin-right: -16px;
-}
-.product-list {
-  margin-bottom: 1rem;
 }
 </style>

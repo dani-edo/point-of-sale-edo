@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "Home",
@@ -106,7 +106,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(["loader"])
+    ...mapState(["loader"]),
+  },
+  mounted() {
+    this.getFirebaseData();
   },
   created() {
     window.addEventListener("resize", this.onResize);
@@ -123,6 +126,7 @@ export default {
         this.dekstop = true;
       }
     },
+    ...mapActions(["getFirebaseData"]),
   },
 };
 </script>
@@ -175,7 +179,10 @@ button.v-btn {
 html {
   scroll-behavior: smooth;
 }
-.v-overlay {
-  z-index: 99!important;
+/* .v-overlay {
+  z-index: 99 !important;
+} */
+.product-list {
+  margin-bottom: 1rem;
 }
 </style>

@@ -27,6 +27,7 @@ const variable = {
       context.commit("LOADING", condition);
     },
     getFirebaseData: ({ commit }) => {
+      commit("LOADING", true);
       const databaseRef = firebase.database().ref("/");
       databaseRef.once("value", (snapshot) => {
         const snap_val = snapshot.val();
@@ -37,22 +38,25 @@ const variable = {
             e[1].key = e[0];
             e[1].price = e[1].price.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
 
-            firebase
-              .storage()
-              .ref("product_picture/" + e[1].image_name)
-              .getDownloadURL()
-              .then((data) => {
-                e[1].imageUrl = data;
+            // image input :start
+            // firebase
+            //   .storage()
+            //   .ref("product_picture/" + e[1].image_name)
+            //   .getDownloadURL()
+            //   .then((data) => {
+            //     e[1].imageUrl = data;
                 commit("PUSH_DATA", e[1]);
                 commit("LOADING", false);
-              })
-              .catch((error) => {
-                console.log("error", error);
-                commit("LOADING", false);
-              });
+            //   })
+            //   .catch((error) => {
+            //     console.log("error", error);
+            //     commit("LOADING", false);
+            //   });
+            // image input :end
           });
         } else {
           commit("LOADING", false);
+          console.log('empty data')
         }
       });
     },

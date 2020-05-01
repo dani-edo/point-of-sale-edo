@@ -9,9 +9,11 @@
         outlined
       >
         <v-list-item three-line>
-          <v-list-item-avatar tile size="80">
+          <!-- image input :start -->
+          <!-- <v-list-item-avatar tile size="80">
             <v-img class="image-set" :src="content.imageUrl"></v-img>
-          </v-list-item-avatar>
+          </v-list-item-avatar> -->
+          <!-- image input :end -->
           <v-list-item-content>
             <v-list-item-title class="headline mb-1">{{
               content.name
@@ -95,7 +97,9 @@
                     v-model="data_create.note"
                   ></v-text-field>
                 </v-col>
-                <v-col>
+
+                <!-- image input :start -->
+                <!-- <v-col>
                   <v-file-input
                     ref="image"
                     :rules="rules.image_rules"
@@ -106,7 +110,8 @@
                     required
                     @change="handleImage"
                   ></v-file-input>
-                </v-col>
+                </v-col> -->
+                <!-- image input :end -->
               </v-row>
             </v-container>
           </v-card-text>
@@ -185,13 +190,15 @@ export default {
       },
       rules: {
         form_rules: [(value) => !!value || "Required."],
-        image_rules: [
-          (value) => !!value || "Required.",
-          (value) =>
-            !value ||
-            value.size < 2000000 ||
-            "Avatar size should be less than 2 MB!",
-        ],
+        // image input :start
+        // image_rules: [
+        //   (value) => !!value || "Required.",
+        //   (value) =>
+        //     !value ||
+        //     value.size < 2000000 ||
+        //     "Avatar size should be less than 2 MB!",
+        // ],
+        // image input :end
       },
     };
   },
@@ -199,9 +206,11 @@ export default {
     ...mapState(["list"]),
   },
   methods: {
-    handleImage(e) {
-      this.imageInput = e;
-    },
+    // image input :start
+    // handleImage(e) {
+    //   this.imageInput = e;
+    // },
+    // image input :end
     createFirebaseData() {
       // Error check
       var hasError = false;
@@ -231,26 +240,26 @@ export default {
         databaseRef.update(updates);
 
         // Storage image upload :start
-        const storageRef = firebase
-          .storage()
-          .ref("product_picture/" + image_name);
-        const task = storageRef.put(this.imageInput);
-        task.on(
-          "state_changed",
-          (snapshot) => {
-            console.log(snapshot);
-            const percentage =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log("uploadProgress", percentage);
-          },
-          (error) => {
-            console.log("error", error);
-          },
-          () => {
-            console.log("complete");
+        // const storageRef = firebase
+        //   .storage()
+        //   .ref("product_picture/" + image_name);
+        // const task = storageRef.put(this.imageInput);
+        // task.on(
+        //   "state_changed",
+        //   (snapshot) => {
+        //     console.log(snapshot);
+        //     const percentage =
+        //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        //     console.log("uploadProgress", percentage);
+        //   },
+        //   (error) => {
+        //     console.log("error", error);
+        //   },
+        //   () => {
+        //     console.log("complete");
             this.getFirebaseData();
-          }
-        );
+        //   }
+        // );
         // Storage image upload :end
 
         this.condition.modal_create = false;
@@ -284,19 +293,21 @@ export default {
         .database()
         .ref("/" + this.key.delete_confirmation_key)
         .remove();
-      firebase
-        .storage()
-        .ref("product_picture/" + this.key.delete_image_name)
-        .delete()
-        .then(() => {
-          console.log("deleted succesfully");
+      // image input :start
+      // firebase
+      //   .storage()
+      //   .ref("product_picture/" + this.key.delete_image_name)
+      //   .delete()
+      //   .then(() => {
+      //     console.log("deleted succesfully");
           this.getFirebaseData();
-          this.loading(false);
-        })
-        .catch((error) => {
-          console.log(error);
-          this.loading(false);
-        });
+          // this.loading(false);
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //     this.loading(false);
+      //   });
+      // image input :end
       this.key.delete_confirmation_key = this.key.delete_image_name = "";
       this.condition.modal_delete = false;
     },
@@ -305,7 +316,7 @@ export default {
         "";
       this.data_create.price = null;
     },
-    ...mapActions(["loading"]),
+    ...mapActions(["loading", "getFirebaseData"]),
   },
 };
 </script>

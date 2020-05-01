@@ -20,9 +20,11 @@
         outlined
       >
         <v-list-item three-line>
-          <v-list-item-avatar tile size="80">
+          <!-- image input :start -->
+          <!-- <v-list-item-avatar tile size="80">
             <v-img class="image-set" :src="content.imageUrl"></v-img>
-          </v-list-item-avatar>
+          </v-list-item-avatar> -->
+          <!-- image input :end -->
           <v-list-item-content>
             <v-list-item-title class="headline mb-1">{{
               content.name
@@ -54,6 +56,9 @@ export default {
   methods: {
     onKeyup() {
       console.log(this.input);
+      this.list.map((e) => {
+        console.log(e.name.includes(this.input));
+      });
     },
   },
 };
@@ -67,6 +72,7 @@ export default {
   position: fixed;
   left: 10px;
   bottom: 10px;
+  z-index: 1;
 }
 .price {
   color: #3bbcd4 !important;

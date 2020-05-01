@@ -18,6 +18,7 @@
         class="mx-auto product-list"
         max-width="100%"
         outlined
+        :ref="content.key"
       >
         <v-list-item three-line>
           <!-- image input :start -->
@@ -55,10 +56,24 @@ export default {
   },
   methods: {
     onKeyup() {
-      console.log(this.input);
-      this.list.map((e) => {
-        console.log(e.name.includes(this.input));
-      });
+      // show/hide element by search :start
+      if (this.input !== "") {
+        this.list.map((e) => {
+          if (
+            e.name.toLowerCase().includes(this.input) ||
+            e.name.includes(this.input)
+          ) {
+            this.$refs[e.key][0].$el.classList.remove("hide");
+          } else {
+            this.$refs[e.key][0].$el.classList.add("hide");
+          }
+        });
+      } else {
+        this.list.map((e) => {
+          this.$refs[e.key][0].$el.classList.remove("hide");
+        });
+      }
+      // show/hide element by search :end
     },
   },
 };
@@ -80,5 +95,8 @@ export default {
 }
 .v-application .overline {
   text-transform: unset;
+}
+.hide {
+  display: none !important;
 }
 </style>

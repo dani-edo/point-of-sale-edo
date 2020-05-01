@@ -11,6 +11,7 @@
             color="#3bbcd4"
             :value="input"
             @input="onInput"
+            autocomplete="off"
           ></v-text-field>
           <v-btn class="submit-search" type="submit">
             <v-icon>search</v-icon>
@@ -28,9 +29,10 @@
       >
         <v-list-item three-line>
           <!-- image input :start -->
-          <!-- <v-list-item-avatar tile size="80">
-            <v-img class="image-set" :src="content.imageUrl"></v-img>
-          </v-list-item-avatar> -->
+          <v-list-item-avatar tile>
+            <!-- <v-img class="image-set" :src="content.imageUrl"></v-img> -->
+            <v-icon class="image-set">launch</v-icon>
+          </v-list-item-avatar>
           <!-- image input :end -->
           <v-list-item-content>
             <v-list-item-title class="headline mb-1">{{
@@ -109,10 +111,10 @@ export default {
 }
 .search-container {
   position: fixed;
-  left: 10px;
+  left: 12px;
   bottom: 10px;
   z-index: 1;
-  max-width: calc(100% - 20px);
+  max-width: calc(100% - 24px);
 }
 .price {
   color: #3bbcd4 !important;
@@ -123,5 +125,11 @@ export default {
 }
 .hide {
   display: none !important;
+}
+.v-avatar {
+  margin-bottom: 16px !important;
+  margin-top: 10px !important;
+  margin-left: -10px;
+  margin-right: 0px !important;
 }
 </style>

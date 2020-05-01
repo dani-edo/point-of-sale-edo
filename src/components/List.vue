@@ -27,15 +27,14 @@
             <v-btn
               variant="primary"
               class="primary"
-              disabled
               @click="editProduct(content.key)"
-              >Edit</v-btn
+              ><v-icon>edit</v-icon></v-btn
             >
             <v-btn
               variant="danger"
               class="error"
               @click="deleteProduct(content.key, content.image_name)"
-              >Del</v-btn
+              ><v-icon>delete</v-icon></v-btn
             >
           </v-card-actions>
         </v-list-item>
@@ -361,5 +360,8 @@ button.v-btn.floating-button {
 }
 .actions {
   margin-right: -16px;
+}
+.actions button {
+  min-width: unset!important;
 }
 </style>

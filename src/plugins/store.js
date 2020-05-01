@@ -45,8 +45,8 @@ const variable = {
             //   .getDownloadURL()
             //   .then((data) => {
             //     e[1].imageUrl = data;
-                commit("PUSH_DATA", e[1]);
-                commit("LOADING", false);
+            commit("PUSH_DATA", e[1]);
+            commit("LOADING", false);
             //   })
             //   .catch((error) => {
             //     console.log("error", error);
@@ -56,7 +56,7 @@ const variable = {
           });
         } else {
           commit("LOADING", false);
-          console.log('empty data')
+          console.log("empty data");
         }
       });
     },

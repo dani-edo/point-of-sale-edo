@@ -66,6 +66,7 @@
                     hint="Nama produk harus jelas"
                     v-model="data_create.name"
                     :rules="rules.form_rules"
+                    @keyup="capitalize"
                   ></v-text-field>
                 </v-col>
                 <v-col class="px-0 py-0" cols="6">
@@ -257,7 +258,7 @@ export default {
         //   },
         //   () => {
         //     console.log("complete");
-            this.getFirebaseData();
+        this.getFirebaseData();
         //   }
         // );
         // Storage image upload :end
@@ -300,8 +301,8 @@ export default {
       //   .delete()
       //   .then(() => {
       //     console.log("deleted succesfully");
-          this.getFirebaseData();
-          // this.loading(false);
+      this.getFirebaseData();
+      // this.loading(false);
       //   })
       //   .catch((error) => {
       //     console.log(error);
@@ -317,6 +318,14 @@ export default {
       this.data_create.price = null;
     },
     ...mapActions(["loading", "getFirebaseData"]),
+    capitalize() {
+      this.data_create.name = this.data_create.name.replace(
+        /(\b[a-z](?!\s))/g,
+        function(x) {
+          return x.toUpperCase();
+        }
+      );
+    },
   },
 };
 </script>

@@ -2,7 +2,7 @@
   <v-row>
     <v-col>
       <v-card class="search-container">
-        <v-form ref="form" class="form-search">
+        <v-form ref="form" class="form-search" @submit.prevent="onSubmit">
           <v-text-field
             class="text-input"
             label="Cari..."
@@ -67,13 +67,15 @@ export default {
       });
     },
     onInput(e) {
-      this.input = e;
+      if (e !== "submit") {
+        this.input = e;
+      }
       // show/hide element by search :start
       if (this.input !== null) {
         this.list.map((e) => {
           if (
-            e.name.toLowerCase().includes(this.input) ||
-            e.name.includes(this.input)
+            e.name.toLowerCase().includes(this.input.toLowerCase()) ||
+            e.name.includes(this.input.toLowerCase())
           ) {
             this.$refs[e.key][0].$el.classList.remove("hide");
           } else {
@@ -85,6 +87,9 @@ export default {
       }
       console.log(this.input);
       // show/hide element by search :end
+    },
+    onSubmit() {
+      this.onInput("submit");
     },
   },
 };

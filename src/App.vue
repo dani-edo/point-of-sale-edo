@@ -78,7 +78,12 @@
       <!-- content :start -->
       <v-content>
         <v-container>
-          <v-btn color="primary" class="menu-button" dark @click.stop="drawer = !drawer">
+          <v-btn
+            color="primary"
+            class="menu-button"
+            dark
+            @click.stop="drawer = !drawer"
+          >
             <v-icon>menu</v-icon>
           </v-btn>
           <router-view></router-view>
@@ -171,6 +176,7 @@ button.v-btn.menu-button {
   margin: 12px;
   width: calc(100% - 24px);
   left: 0;
+  padding-right: 4rem;
 }
 .v-content {
   margin-top: 70px;

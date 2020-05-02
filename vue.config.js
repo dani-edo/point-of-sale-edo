@@ -4,7 +4,7 @@ module.exports = {
   ],
   pwa: {
     name: 'Warung Mbok Soinem',
-    themeColor: '#4DBA87',
+    themeColor: '#3bbcd4',
     msTileColor: '#000000',
     appleMobileWebAppCapable: 'yes',
     appleMobileWebAppStatusBarStyle: 'black',

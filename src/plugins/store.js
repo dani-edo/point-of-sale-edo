@@ -24,6 +24,7 @@ const variable = {
       state.list.push(payload);
     },
     SORT_DATA: (state) => {
+      state.names = []
       state.list.map((e) => {
         state.names.push(e.name);
       });
@@ -63,7 +64,6 @@ const variable = {
             //   .then((data) => {
             //     e[1].imageUrl = data;
             commit("PUSH_DATA", e[1]);
-            commit("LOADING", false);
             //   })
             //   .catch((error) => {
             //     console.log("error", error);
@@ -72,6 +72,7 @@ const variable = {
             // image input :end
           });
           commit("SORT_DATA");
+          commit("LOADING", false);
         } else {
           commit("LOADING", false);
           console.log("empty data");

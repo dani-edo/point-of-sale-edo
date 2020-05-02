@@ -168,6 +168,10 @@ import { mapActions, mapState } from "vuex";
 
 export default {
   name: "List",
+  metaInfo: {
+    // title will be injected into parent titleTemplate
+    title: "Edit Produk",
+  },
   data() {
     return {
       imageInput: [],
@@ -362,6 +366,6 @@ button.v-btn.floating-button {
   margin-right: -16px;
 }
 .actions button {
-  min-width: unset!important;
+  min-width: unset !important;
 }
 </style>

@@ -60,6 +60,11 @@ export default {
       input: "",
     };
   },
+  metaInfo: {
+    title: "Warung Mbok Soinem",
+    // override the parent template and just use the above title only
+    titleTemplate: null,
+  },
   computed: {
     ...mapState(["list"]),
   },
@@ -108,7 +113,7 @@ export default {
   margin: auto 15px;
 }
 .text-input {
-  padding: 1rem 1rem .5rem;
+  padding: 1rem 1rem 0.5rem;
 }
 .search-container {
   position: fixed;

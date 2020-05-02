@@ -5,7 +5,7 @@ import vuetify from "./plugins/vuetify";
 import VueRouter from "vue-router";
 import router from "./plugins/router";
 import store from "./plugins/store";
-import './registerServiceWorker'
+import "./registerServiceWorker";
 
 Vue.use(VueRouter);
 Vue.config.productionTip = false;

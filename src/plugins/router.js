@@ -8,6 +8,15 @@ export default new VueRouter({
       path: "/",
       name: "Home",
       component: Home,
+      meta: {
+        title: "Warung mbok Soinem - POS",
+        metatags: [
+          {
+            name: "description",
+            content: "Jualan menjadi lebih mudah",
+          },
+        ],
+      },
     },
     {
       path: "/list",

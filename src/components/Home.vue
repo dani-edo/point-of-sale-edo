@@ -13,9 +13,9 @@
             @input="onInput"
             autocomplete="off"
           ></v-text-field>
-          <v-btn class="submit-search" type="submit">
+          <!-- <v-btn class="submit-search" type="submit">
             <v-icon>search</v-icon>
-          </v-btn>
+          </v-btn> -->
         </v-form>
       </v-card>
 

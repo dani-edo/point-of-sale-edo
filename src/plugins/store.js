@@ -10,6 +10,8 @@ const variable = {
   state: {
     loader: true,
     list: [],
+    list_temp: [],
+    names: [],
   },
   mutations: {
     LOADING: (state, condition) => {
@@ -20,6 +22,21 @@ const variable = {
     },
     PUSH_DATA: (state, payload) => {
       state.list.push(payload);
+    },
+    SORT_DATA: (state) => {
+      state.list.map((e) => {
+        state.names.push(e.name);
+      });
+      state.names.sort();
+      state.list_temp = state.list;
+      state.list = [];
+      state.names.map((e) => {
+        state.list_temp.map((el) => {
+          if (el.name === e) {
+            state.list.push(el);
+          }
+        });
+      });
     },
   },
   actions: {
@@ -58,6 +75,7 @@ const variable = {
           commit("LOADING", false);
           console.log("empty data");
         }
+        commit("SORT_DATA");
       });
     },
   },

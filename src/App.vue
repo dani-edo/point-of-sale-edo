@@ -218,4 +218,11 @@ html {
 .product-list {
   margin-bottom: 1rem;
 }
+.v-application .headline {
+  white-space: normal !important;
+  font-size: 1.3rem !important;
+}
+.hide {
+  display: none !important;
+}
 </style>

@@ -1,12 +1,30 @@
 <template>
   <v-row>
     <v-col>
+      <!-- form search :start -->
+      <v-card class="search-container">
+        <v-text-field
+          class="text-input"
+          label="Cari..."
+          clearable
+          solo
+          @click:clear="onClear"
+          color="#3bbcd4"
+          :value="input"
+          @input="onInput"
+          autocomplete="off"
+          hide-details
+        ></v-text-field>
+      </v-card>
+      <!-- form search :end -->
+
       <v-card
         v-for="content in list"
         :key="content.key"
         class="mx-auto product-list"
         max-width="100%"
         outlined
+        :ref="content.key"
       >
         <v-list-item three-line>
           <!-- image input :start -->
@@ -62,7 +80,7 @@
                   <v-text-field
                     ref="name"
                     label="Nama"
-                    hint="Nama produk harus jelas"
+                    hint="*gunakan spasi jika kata terakhir hilang"
                     v-model="data_create.name"
                     :rules="rules.form_rules"
                     @keyup="capitalize"
@@ -74,7 +92,7 @@
                     label="Harga"
                     type="number"
                     v-model="data_create.price"
-                    hint="Tidak perlu ditambah titik atau koma"
+                    hint="*tidak perlu ditambah titik atau koma"
                     :rules="rules.form_rules"
                     required
                   ></v-text-field>
@@ -82,7 +100,15 @@
                 <v-col class="px-0 py-0" cols="6">
                   <v-select
                     ref="unit"
-                    :items="['buah', 'kotak', 'kg', 'ons', 'bungkus', 'botol', 'biji']"
+                    :items="[
+                      'buah',
+                      'kotak',
+                      'kg',
+                      'ons',
+                      'bungkus',
+                      'botol',
+                      'biji',
+                    ]"
                     label="Satuan"
                     v-model="data_create.unit"
                     class="ml-1"
@@ -93,7 +119,7 @@
                 <v-col class="px-0 py-0" cols="12">
                   <v-text-field
                     label="Catatan (opsional)"
-                    hint="Keterangan agar lebih jelas"
+                    hint="misal: beli 1 dapat 5"
                     v-model="data_create.note"
                   ></v-text-field>
                 </v-col>
@@ -174,6 +200,7 @@ export default {
   },
   data() {
     return {
+      input: "",
       imageInput: [],
       condition: {
         modal_create: false,
@@ -329,13 +356,43 @@ export default {
         }
       );
     },
+    onClear() {
+      this.list.map((e) => {
+        this.$refs[e.key][0].$el.classList.remove("hide");
+      });
+    },
+    onInput(e) {
+      if (e !== "submit") {
+        this.input = e;
+      }
+      // show/hide element by search :start
+      if (this.input !== null) {
+        this.list.map((e) => {
+          if (
+            e.name.toLowerCase().includes(this.input.toLowerCase()) ||
+            e.name.includes(this.input.toLowerCase())
+          ) {
+            this.$refs[e.key][0].$el.classList.remove("hide");
+          } else {
+            this.$refs[e.key][0].$el.classList.add("hide");
+          }
+        });
+      } else {
+        this.onClear();
+      }
+      console.log(this.input);
+      // show/hide element by search :end
+    },
+    onSubmit() {
+      this.onInput("submit");
+    },
   },
 };
 </script>
 
 <style scoped>
 .text-input {
-  padding: 1rem 1rem 0;
+  padding: 0;
 }
 .price {
   color: #3bbcd4 !important;
@@ -367,5 +424,24 @@ button.v-btn.floating-button {
 }
 .actions button {
   min-width: unset !important;
+}
+.search-container {
+  position: fixed;
+  left: 61px;
+  bottom: 10px;
+  z-index: 1;
+  max-width: calc(100% - 24px);
+  border-left: 8px solid #3bbcd4;
+}
+.search-container .v-text-field.v-text-field--solo .v-input__control {
+  min-height: unset !important;
+}
+.search-container .v-text-field.v-text-field--enclosed .v-text-field__details {
+  display: none !important;
+}
+.v-text-field.v-text-field--solo:not(.v-text-field--solo-flat)
+  > .v-input__control
+  > .v-input__slot {
+  margin: 0 !important;
 }
 </style>

@@ -1,6 +1,7 @@
 <template>
   <v-row>
     <v-col>
+      <!-- form search :start -->
       <v-card class="search-container">
         <v-form ref="form" class="form-search" @submit.prevent="onSubmit">
           <v-text-field
@@ -19,6 +20,7 @@
           </v-btn> -->
         </v-form>
       </v-card>
+      <!-- form search :end -->
 
       <v-card
         v-for="content in list"
@@ -129,9 +131,6 @@ export default {
 }
 .v-application .overline {
   text-transform: unset;
-}
-.hide {
-  display: none !important;
 }
 .v-avatar {
   margin-bottom: 16px !important;

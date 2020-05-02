@@ -3,7 +3,7 @@ module.exports = {
     "vuetify"
   ],
   pwa: {
-    name: 'Warung Mbok Soinem',
+    name: 'warung-mbok-soinem',
     themeColor: '#3bbcd4',
     msTileColor: '#000000',
     appleMobileWebAppCapable: 'yes',

@@ -353,8 +353,8 @@ export default {
 }
 button.v-btn.floating-button {
   position: fixed;
-  bottom: 10px;
-  left: 10px;
+  bottom: 12px;
+  left: 12px;
   background-color: #3bbcd4 !important;
   z-index: 1;
 }

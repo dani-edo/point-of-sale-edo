@@ -71,11 +71,11 @@ const variable = {
             //   });
             // image input :end
           });
+          commit("SORT_DATA");
         } else {
           commit("LOADING", false);
           console.log("empty data");
         }
-        commit("SORT_DATA");
       });
     },
   },

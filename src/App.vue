@@ -22,19 +22,19 @@
     </div>
     <!-- loader overlay :end -->
 
-    <!-- navbar :start -->
-    <v-navigation-drawer v-model="drawer" absolute temporary>
-      <v-list-item>
-        <!-- <v-list-item-avatar>
+    <!-- navbar :start (hide temporary) -->
+    <!-- <v-navigation-drawer v-model="drawer" absolute temporary>
+      <v-list-item> -->
+    <!-- <v-list-item-avatar>
             <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
           </v-list-item-avatar> -->
 
-        <v-list-item-content>
+    <!-- <v-list-item-content>
           <v-list-item-title>Warung si Mbok</v-list-item-title>
         </v-list-item-content>
-      </v-list-item>
+      </v-list-item> -->
 
-      <v-divider></v-divider>
+    <!-- <v-divider></v-divider>
 
       <v-list dense>
         <v-list-item
@@ -42,20 +42,20 @@
           :key="item.title"
           link
           :to="item.link"
-        >
-          <!-- <router-link :to="item.link"> -->
-          <v-list-item-icon>
+        > -->
+    <!-- <router-link :to="item.link"> -->
+    <!-- <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
             <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-          <!-- </router-link> -->
-        </v-list-item>
+          </v-list-item-content> -->
+    <!-- </router-link> -->
+    <!-- </v-list-item>
       </v-list>
-    </v-navigation-drawer>
-    <!-- navbar :end -->
+    </v-navigation-drawer> -->
+    <!-- navbar :end (hide temporary) -->
 
     <v-sheet
       height="100vh"
@@ -78,13 +78,28 @@
       <!-- content :start -->
       <v-content>
         <v-container>
-          <v-btn
+          <!-- navar hide temporary :start -->
+          <!-- <v-btn
             color="primary"
             class="menu-button"
             dark
             @click.stop="drawer = !drawer"
           >
             <v-icon>menu</v-icon>
+          </v-btn> -->
+          <!-- navar hide temporary :end -->
+          <v-btn
+            v-for="(item, index) in items"
+            :key="index"
+            color="primary"
+            class="menu-button"
+            dark
+            :to="item.link"
+            v-show="item.show"
+            :ref="item.icon"
+            @click="handleClick"
+          >
+            <v-icon>{{ item.icon }}</v-icon>
           </v-btn>
           <router-view></router-view>
         </v-container>
@@ -103,8 +118,8 @@ export default {
     return {
       drawer: null,
       items: [
-        { title: "Cari", icon: "search", link: "/" },
-        { title: "Daftar Produk", icon: "list", link: "/list" },
+        { title: "Cari", icon: "search", link: "/", show: false },
+        { title: "Daftar Produk", icon: "list", link: "/list", show: true },
       ],
       title: "Warung si mbok",
       dekstop: true,
@@ -132,12 +147,16 @@ export default {
       }
     },
     ...mapActions(["getFirebaseData"]),
+    handleClick() {
+      this.items[0].show = !this.items[0].show;
+      this.items[1].show = !this.items[1].show;
+    },
   },
 };
 </script>
 
 <style scoped>
-button.v-btn.menu-button {
+a.v-btn.menu-button {
   min-width: 45px;
   padding: 0 10px;
   position: fixed;

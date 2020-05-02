@@ -12,6 +12,7 @@
             :value="input"
             @input="onInput"
             autocomplete="off"
+            hint="*gunakan spasi jika cari tidak berfungsi"
           ></v-text-field>
           <!-- <v-btn class="submit-search" type="submit">
             <v-icon>search</v-icon>
@@ -107,7 +108,7 @@ export default {
   margin: auto 15px;
 }
 .text-input {
-  padding: 1rem 1rem 0;
+  padding: 1rem 1rem .5rem;
 }
 .search-container {
   position: fixed;

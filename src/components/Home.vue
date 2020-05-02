@@ -121,7 +121,7 @@ export default {
   bottom: 10px;
   z-index: 1;
   max-width: calc(100% - 24px);
-  border: 3px solid #3bbcd4;
+  border-left: 8px solid #3bbcd4;
 }
 .price {
   color: #3bbcd4 !important;

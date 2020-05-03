@@ -226,8 +226,8 @@ html {
   display: none !important;
 }
 #clear-button {
-  color: #f65153;
-  font-size: 1.5rem;
+  color: #f65153 !important;
+  font-size: 24px !important;
   position: absolute;
   right: 10px;
   top: 3px;
@@ -243,11 +243,11 @@ html {
   outline: none;
 }
 .search-container {
-  position: fixed!important;
+  position: fixed !important;
   left: 61px;
   bottom: 12px;
-  z-index: 1!important;
-  max-width: calc(100% - 24px)!important;
-  border-left: 8px solid #3bbcd4!important;
+  z-index: 1 !important;
+  max-width: calc(100% - 24px) !important;
+  border-left: 8px solid #3bbcd4 !important;
 }
 </style>

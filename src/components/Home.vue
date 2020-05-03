@@ -21,7 +21,7 @@
             @keyup="onInput"
             placeholder="Cari..."
           />
-          <button id="clear-button" @click="onClear" v-show="showClear">
+          <button id="clear-button" @click="onClear" v-show="show.showClear">
             &#10006;
           </button>
           <!-- <v-btn class="submit-search" type="submit">
@@ -69,7 +69,9 @@ export default {
   data() {
     return {
       input: "",
-      showClear: false,
+      show: {
+        showClear: false,
+      },
     };
   },
   metaInfo: {
@@ -82,7 +84,7 @@ export default {
   },
   methods: {
     onClear() {
-      this.showClear = false;
+      this.show.showClear = false;
       this.input = "";
       this.list.map((e) => {
         this.$refs[e.key][0].$el.classList.remove("hide");
@@ -91,7 +93,7 @@ export default {
     onInput(e) {
       this.input = e.target.value;
       // show/hide element by search :start
-      if (this.input !== '') {
+      if (this.input !== "") {
         this.list.map((e) => {
           if (
             e.name.toLowerCase().includes(this.input.toLowerCase()) ||
@@ -102,7 +104,7 @@ export default {
             this.$refs[e.key][0].$el.classList.add("hide");
           }
         });
-        this.showClear = true;
+        this.show.showClear = true;
       } else {
         this.onClear();
       }

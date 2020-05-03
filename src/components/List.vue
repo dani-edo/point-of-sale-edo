@@ -9,7 +9,7 @@
           @keyup="onInput"
           placeholder="Cari..."
         />
-        <button id="clear-button" @click="onClear" v-show="showClear">
+        <button id="clear-button" @click="onClear" v-show="show.showClear">
           &#10006;
         </button>
       </v-card>
@@ -91,12 +91,13 @@
                       <div class="v-input__slot">
                         <div class="v-text-field__slot">
                           <label
-                            for="input-245"
+                            for="name"
                             class="v-label v-label--active theme--light"
                             style="left: 0px; right: auto; position: absolute;"
                             >Nama</label
                           ><input
-                            id="input-245"
+                            id="name"
+                            ref="name"
                             v-model="data_create.name"
                             @change="capitalize"
                             placeholder="Nama..."
@@ -106,7 +107,12 @@
                       </div>
                       <div class="v-text-field__details">
                         <div class="v-messages theme--light">
-                          <div class="v-messages__wrapper"></div>
+                          <div
+                            class="v-messages__wrapper error"
+                            v-show="show.name_error"
+                          >
+                            Wajib diisi
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -228,7 +234,10 @@ export default {
     return {
       input: "",
       imageInput: [],
-      showClear: false,
+      show: {
+        showClear: false,
+        name_error: false,
+      },
       condition: {
         modal_create: false,
         modal_delete: false,
@@ -247,7 +256,7 @@ export default {
         image_name: "",
       },
       rules: {
-        form_rules: [(value) => !!value || "Required."],
+        form_rules: [(value) => !!value || "Wajib diisi."],
         // image input :start
         // image_rules: [
         //   (value) => !!value || "Required.",
@@ -273,9 +282,16 @@ export default {
       // Error check
       var hasError = false;
       Object.entries(this.$refs).forEach((e) => {
-        if (e[1].hasError) {
-          hasError = true;
+        if (e[0] === "price" || e[0] === "unit") {
+          if (e[1].hasError) {
+            hasError = true;
+          }
+        } else if (e[0] === "name") {
+          if (this.$refs[e[0]].value === "") {
+            hasError = true;
+          }
         }
+
         return hasError;
       });
 
@@ -325,8 +341,18 @@ export default {
         this.emptyData();
         this.loading(false);
       } else {
+        // console.log(this.$refs)
         Object.entries(this.$refs).forEach((e) => {
-          this.$refs[e[0]].validate(true);
+          if (e[0] === "price" || e[0] === "unit") {
+            this.$refs[e[0]].validate(true);
+          } else if (e[0] === "name") {
+            if (this.$refs[e[0]].value === "") {
+              this.show.name_error = true;
+            }
+          }
+          // if (this.$refs[e[0]].$vnode.data.ref === "price") {
+          // console.log(this.$refs[e[0]].$vnode.data.ref)
+          // }
         });
       }
     },
@@ -383,9 +409,10 @@ export default {
           return x.toUpperCase();
         }
       );
+      this.show.name_error = false;
     },
     onClear() {
-      this.showClear = false;
+      this.show.showClear = false;
       this.input = "";
       this.list.map((e) => {
         this.$refs[e.key][0].$el.classList.remove("hide");
@@ -394,7 +421,7 @@ export default {
     onInput(e) {
       this.input = e.target.value;
       // show/hide element by search :start
-      if (this.input !== '') {
+      if (this.input !== "") {
         this.list.map((e) => {
           if (
             e.name.toLowerCase().includes(this.input.toLowerCase()) ||
@@ -405,7 +432,7 @@ export default {
             this.$refs[e.key][0].$el.classList.add("hide");
           }
         });
-        this.showClear = true;
+        this.show.showClear = true;
       } else {
         this.onClear();
       }
@@ -473,5 +500,9 @@ button.v-btn.floating-button {
   > .v-input__slot:before {
   border-color: #278de6;
   /* border-width: 0.5px; */
+}
+.v-messages__wrapper.error {
+  color: red;
+  background-color: unset !important;
 }
 </style>

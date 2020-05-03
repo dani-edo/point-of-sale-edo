@@ -47,7 +47,7 @@ const variable = {
     getFirebaseData: ({ commit }) => {
       commit("LOADING", true);
       const databaseRef = firebase.database().ref("/");
-      databaseRef.once("value", (snapshot) => {
+      databaseRef.on("value", (snapshot) => {
         const snap_val = snapshot.val();
         commit("EMPTY_LIST");
 

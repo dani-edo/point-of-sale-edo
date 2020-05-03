@@ -225,4 +225,29 @@ html {
 .hide {
   display: none !important;
 }
+#clear-button {
+  color: #f65153;
+  font-size: 1.5rem;
+  position: absolute;
+  right: 10px;
+  top: 3px;
+  text-shadow: 0px 1px 3px #0000006e;
+}
+#clear-button:focus {
+  outline: none;
+}
+.search-input {
+  padding: 0.5rem 1.8rem 0.5rem 1rem;
+}
+.search-input:focus {
+  outline: none;
+}
+.search-container {
+  position: fixed!important;
+  left: 61px;
+  bottom: 12px;
+  z-index: 1!important;
+  max-width: calc(100% - 24px)!important;
+  border-left: 8px solid #3bbcd4!important;
+}
 </style>

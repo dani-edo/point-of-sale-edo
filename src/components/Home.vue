@@ -4,17 +4,26 @@
       <!-- form search :start -->
       <v-card class="search-container">
         <v-form ref="form" class="form-search" @submit.prevent="onSubmit">
-          <v-text-field
+          <!-- <v-text-field
             class="text-input"
             label="Cari..."
             clearable
             @click:clear="onClear"
             color="#3bbcd4"
-            :value="input"
-            @input="onInput"
-            autocomplete="off"
+            v-model="input"
+            @keyup.native="onInput"
+            autocomplete="on"
             hint="*gunakan spasi jika cari tidak berfungsi"
-          ></v-text-field>
+          ></v-text-field> -->
+          <input
+            class="search-input"
+            v-model="input"
+            @keyup="onInput"
+            placeholder="Cari..."
+          />
+          <button id="clear-button" @click="onClear" v-show="showClear">
+            &#10006;
+          </button>
           <!-- <v-btn class="submit-search" type="submit">
             <v-icon>search</v-icon>
           </v-btn> -->
@@ -60,6 +69,7 @@ export default {
   data() {
     return {
       input: "",
+      showClear: false,
     };
   },
   metaInfo: {
@@ -72,16 +82,16 @@ export default {
   },
   methods: {
     onClear() {
+      this.showClear = false;
+      this.input = "";
       this.list.map((e) => {
         this.$refs[e.key][0].$el.classList.remove("hide");
       });
     },
     onInput(e) {
-      if (e !== "submit") {
-        this.input = e;
-      }
+      this.input = e.target.value;
       // show/hide element by search :start
-      if (this.input !== null) {
+      if (this.input !== '') {
         this.list.map((e) => {
           if (
             e.name.toLowerCase().includes(this.input.toLowerCase()) ||
@@ -92,14 +102,14 @@ export default {
             this.$refs[e.key][0].$el.classList.add("hide");
           }
         });
+        this.showClear = true;
       } else {
         this.onClear();
       }
-      console.log(this.input);
       // show/hide element by search :end
     },
     onSubmit() {
-      this.onInput("submit");
+      console.log("submit");
     },
   },
 };
@@ -114,16 +124,9 @@ export default {
   color: white;
   margin: auto 15px;
 }
-.text-input {
-  padding: 1rem 1rem 0.5rem;
-}
 .search-container {
-  position: fixed;
   left: 12px;
   bottom: 10px;
-  z-index: 1;
-  max-width: calc(100% - 24px);
-  border-left: 8px solid #3bbcd4;
 }
 .price {
   color: #3bbcd4 !important;

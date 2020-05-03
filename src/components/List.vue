@@ -3,18 +3,15 @@
     <v-col>
       <!-- form search :start -->
       <v-card class="search-container">
-        <v-text-field
-          class="text-input"
-          label="Cari..."
-          clearable
-          solo
-          @click:clear="onClear"
-          color="#3bbcd4"
-          :value="input"
-          @input="onInput"
-          autocomplete="off"
-          hide-details
-        ></v-text-field>
+        <input
+          class="search-input"
+          v-model="input"
+          @keyup="onInput"
+          placeholder="Cari..."
+        />
+        <button id="clear-button" @click="onClear" v-show="showClear">
+          &#10006;
+        </button>
       </v-card>
       <!-- form search :end -->
 
@@ -77,14 +74,43 @@
             <v-container>
               <v-row>
                 <v-col class="px-0 py-0" cols="12">
-                  <v-text-field
+                  <!-- <v-text-field
                     ref="name"
                     label="Nama"
                     hint="*gunakan spasi jika kata terakhir hilang"
                     v-model="data_create.name"
                     :rules="rules.form_rules"
                     @keyup="capitalize"
-                  ></v-text-field>
+                  ></v-text-field> -->
+
+                  <div
+                    data-v-264bddce=""
+                    class="v-input v-input--is-label-active v-input--is-dirty theme--light v-text-field v-text-field--is-booted"
+                  >
+                    <div class="v-input__control">
+                      <div class="v-input__slot">
+                        <div class="v-text-field__slot">
+                          <label
+                            for="input-245"
+                            class="v-label v-label--active theme--light"
+                            style="left: 0px; right: auto; position: absolute;"
+                            >Nama</label
+                          ><input
+                            id="input-245"
+                            v-model="data_create.name"
+                            @change="capitalize"
+                            placeholder="Nama..."
+                            type="text"
+                          />
+                        </div>
+                      </div>
+                      <div class="v-text-field__details">
+                        <div class="v-messages theme--light">
+                          <div class="v-messages__wrapper"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </v-col>
                 <v-col class="px-0 py-0" cols="6">
                   <v-text-field
@@ -202,6 +228,7 @@ export default {
     return {
       input: "",
       imageInput: [],
+      showClear: false,
       condition: {
         modal_create: false,
         modal_delete: false,
@@ -305,7 +332,7 @@ export default {
     },
     editProduct(key) {
       const databaseRef = firebase.database().ref("/" + key);
-      databaseRef.once("value", (snapshot) => {
+      databaseRef.on("value", (snapshot) => {
         const snap_val = snapshot.val();
         this.data_create = snap_val;
       });
@@ -348,7 +375,8 @@ export default {
       this.data_create.price = null;
     },
     ...mapActions(["loading", "getFirebaseData"]),
-    capitalize() {
+    capitalize(e) {
+      this.data_create.name = e.target.value;
       this.data_create.name = this.data_create.name.replace(
         /(\b[a-z](?!\s))/g,
         function(x) {
@@ -357,16 +385,16 @@ export default {
       );
     },
     onClear() {
+      this.showClear = false;
+      this.input = "";
       this.list.map((e) => {
         this.$refs[e.key][0].$el.classList.remove("hide");
       });
     },
     onInput(e) {
-      if (e !== "submit") {
-        this.input = e;
-      }
+      this.input = e.target.value;
       // show/hide element by search :start
-      if (this.input !== null) {
+      if (this.input !== '') {
         this.list.map((e) => {
           if (
             e.name.toLowerCase().includes(this.input.toLowerCase()) ||
@@ -377,14 +405,14 @@ export default {
             this.$refs[e.key][0].$el.classList.add("hide");
           }
         });
+        this.showClear = true;
       } else {
         this.onClear();
       }
-      console.log(this.input);
       // show/hide element by search :end
     },
     onSubmit() {
-      this.onInput("submit");
+      console.log("submit");
     },
   },
 };
@@ -426,12 +454,8 @@ button.v-btn.floating-button {
   min-width: unset !important;
 }
 .search-container {
-  position: fixed;
   left: 61px;
-  bottom: 10px;
-  z-index: 1;
-  max-width: calc(100% - 24px);
-  border-left: 8px solid #3bbcd4;
+  bottom: 12px;
 }
 .search-container .v-text-field.v-text-field--solo .v-input__control {
   min-height: unset !important;
@@ -443,5 +467,11 @@ button.v-btn.floating-button {
   > .v-input__control
   > .v-input__slot {
   margin: 0 !important;
+}
+.theme--light.v-text-field:not(.v-input--has-state):hover
+  > .v-input__control
+  > .v-input__slot:before {
+  border-color: #278de6;
+  /* border-width: 0.5px; */
 }
 </style>

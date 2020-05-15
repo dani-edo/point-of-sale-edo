@@ -4,6 +4,8 @@ Simple point of sale application to help my grandma sell products at her grocery
 
 With this application, you can create, read, update, and delete product lists instantly. And also there is a product search facility by entering words in the input form, then the products that contain the words you input will appear quickly.
 
+In accordance with its purpose, this application is only intended for the mobile version (responsive).
+
 ## Depedencies
 ```
 "core-js": "^3.6.4",

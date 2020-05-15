@@ -1,7 +1,8 @@
 # point-of-sale-edo
 
-Simple point of sale application to help my grandmother in selling products at the grocery store. 
-The main purpose of this application is so that all family members know the price of the product, so they can help sell the product even when grandma is not at home.
+Simple point of sale application to help my grandma sell products at her grocery store. The main purpose of this application is so that all family members know the price of the product, so they can help sell the product even when grandma is not at home.
+
+With this application, you can create, read, update, and delete product lists instantly. And also there is a product search facility by entering words in the input form, then the products that contain the words you input will appear quickly.
 
 ## Depedencies
 ```
